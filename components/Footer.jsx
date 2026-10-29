@@ -1,142 +1,159 @@
 'use client';
 
-import { ArrowRight, ArrowUp, Phone, Mail, MessageSquare } from 'lucide-react';
 import { estateData } from '@/data/estateData';
+import { Button, Em, Roll } from '@/components/ui';
+
+const { brand } = estateData;
+const whatsapp = `https://wa.me/${brand.whatsapp}?text=${encodeURIComponent('Hello Casa Brio Concierge, I would like to enquire about a private estate buyout.')}`;
+const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(brand.address)}`;
+
+const columns = [
+  {
+    title: 'The spaces',
+    links: [
+      ['REVEL speakeasy & bar', '#revel'],
+      ['Sapphire pool & pergola', '#spaces'],
+      ['Floodlit cricket turf', '#spaces'],
+      ['Mountain view suites', '#spaces'],
+      ['Grand living salon', '#spaces'],
+    ],
+  },
+  {
+    title: 'The estate',
+    links: [
+      ['About the estate', '#about'],
+      ['Experiences', '#experiences'],
+      ['Buyouts', '#buyouts'],
+      ['A day at Casa Brio', '#day'],
+    ],
+  },
+  {
+    title: 'Visit',
+    links: [
+      ['Location & access', '#location'],
+      ['Get directions', mapsUrl],
+      ['Guest words', '#words'],
+    ],
+  },
+  {
+    title: 'Concierge',
+    links: [
+      [brand.phone, `tel:${brand.phone.replace(/\s/g, '')}`],
+      [brand.email, `mailto:${brand.email}`],
+      ['WhatsApp', whatsapp],
+    ],
+  },
+];
 
 export default function Footer({ onOpenBooking }) {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
-    <footer id="contact" className="pt-28 pb-12 px-6 lg:px-14 bg-[#0a0907] relative overflow-hidden select-none">
-      <div className="max-w-7xl mx-auto space-y-20">
-        {/* Main Inquiries Banner (Editorial NOIRÉ Frame) */}
-        <div className="p-8 sm:p-14 bg-[#16140f] border border-[#f2ede4]/12 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-          <div className="max-w-2xl space-y-4">
-            <div className="flex items-center gap-3">
-              <span className="w-8 h-[1px] bg-[#b9966a]" />
-              <span className="text-[11px] uppercase tracking-[0.25em] text-[#b9966a] font-sans font-medium">
-                PRIVATE ESTATE INQUIRIES
-              </span>
-            </div>
-            <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl font-normal text-[#f7f3ec] leading-[1.08] tracking-[-0.01em]">
-              The entire estate.{' '}
-              <span className="italic font-light text-[#b9966a]">
-                Exclusively yours.
-              </span>
-            </h2>
-            <p className="text-sm sm:text-base text-[#a39c8f] font-sans font-light leading-relaxed">
-              Single-group buyouts only. Zero strangers, shared gates, or curfews.
-            </p>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-4 flex-shrink-0">
-            <button
-              onClick={onOpenBooking}
-              data-noire-roll-root
-              data-nc="button"
-              className="px-8 py-4 bg-[#f2ede4] text-[#0d0c0a] hover:bg-[#c9c0b2] text-xs uppercase tracking-[0.2em] font-sans font-semibold transition-colors cursor-pointer"
-            >
-              <p data-noire-roll-label="RESERVE ESTATE" className="relative m-0">
-                RESERVE ESTATE
-              </p>
-            </button>
-
-            <a
-              href={`https://wa.me/${estateData.brand.whatsapp}?text=Hello%20Casa%20Brio%20Concierge,%20I%20would%20like%20to%20check%20availability%20for%20a%20private%20buyout.`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-7 py-4 border border-[#f2ede4]/20 hover:border-[#b9966a] text-[#f7f3ec] text-xs uppercase tracking-[0.2em] transition-colors flex items-center gap-2 font-sans font-medium"
-              data-nc="link"
-            >
-              <MessageSquare className="w-4 h-4 text-emerald-400" />
-              <span>WhatsApp Concierge</span>
+    <footer id="contact" className="bg-[var(--ink)] text-[var(--ivory)]">
+      {/* Arrive quietly */}
+      <div className="relative overflow-hidden">
+        <img
+          src="/images/bungalow/drone-facade.jpg"
+          alt="Casa Brio beneath the Sahyadri hills"
+          className="absolute inset-0 w-full h-full object-cover px"
+          style={{ '--px': '60px', scale: '1.15', filter: 'brightness(.62) saturate(.85)' }}
+          loading="lazy"
+        />
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,var(--ink)_0%,rgba(13,12,10,.35)_30%,rgba(13,12,10,.2)_55%,var(--ink)_96%)]" />
+        <div className="relative shell pt-40 lg:pt-56 flex flex-col items-center text-center">
+          <span className="t-label text-[var(--stone)]" data-reveal="">
+            Tungarli · Lonavala
+          </span>
+          <h2 className="t-display mt-7" data-reveal="" style={{ '--rd': '.06s', '--rb': '8px' }}>
+            The entire estate. <Em>Exclusively yours.</Em>
+          </h2>
+          <div className="mt-10 flex flex-col sm:flex-row items-center gap-6" data-reveal="" style={{ '--rd': '.14s' }}>
+            <Button variant="ivory" arrow onClick={onOpenBooking}>
+              Reserve the estate
+            </Button>
+            <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="t-label roll-host text-[var(--ivory)]">
+              <Roll>Or WhatsApp the concierge</Roll>
             </a>
           </div>
         </div>
+        <div className="relative overflow-hidden mt-24 lg:mt-36 flex justify-center" aria-hidden="true">
+          <div className="foot-word" data-reveal="" style={{ '--ry': '45%' }}>
+            CASA BRIO
+          </div>
+        </div>
+      </div>
 
-        {/* 4-Column Navigation & Contacts */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 pt-8 border-t border-[#f2ede4]/10 text-xs">
-          {/* Brand */}
-          <div className="space-y-4">
-            <h3 className="font-serif text-2xl text-[#f7f3ec] tracking-wider font-light">
-              {estateData.brand.name}
-            </h3>
-            <p className="text-[#a39c8f] font-sans leading-relaxed">
-              A discreet Lonavala sanctuary nestled beneath the Sahyadri mountains. Designed for discerning families, founders offsites, and milestone celebrations.
+      {/* info */}
+      <div className="shell pt-16 lg:pt-20">
+        <div className="grid lg:grid-cols-2 gap-14">
+          <div className="flex flex-col gap-5 t-lead">
+            <span>{brand.address.replace('Casa Brio Estate, ', '')}</span>
+            <a href={`tel:${brand.phone.replace(/\s/g, '')}`} className="w-fit">
+              {brand.phone}
+            </a>
+            <a href={`mailto:${brand.email}`} className="w-fit">
+              {brand.email}
+            </a>
+            <p className="t-body !text-[15px] text-[var(--muted)] max-w-[360px]">
+              Hosted for one private group at a time. ~90 minutes from Mumbai and ~60 minutes from Pune via the
+              Mumbai–Pune Expressway.
             </p>
           </div>
-
-          {/* Links */}
-          <div className="space-y-3">
-            <span className="text-[10px] uppercase tracking-[0.2em] text-[#b9966a] block font-medium">
-              Spaces
-            </span>
-            <ul className="space-y-2 text-[#a39c8f]">
-              <li><a href="#spaces" className="noire-nav-link">REVEL Speakeasy & Lounge</a></li>
-              <li><a href="#spaces" className="noire-nav-link">Sapphire Pool & Pergola</a></li>
-              <li><a href="#spaces" className="noire-nav-link">Floodlit Box Cricket Turf</a></li>
-              <li><a href="#spaces" className="noire-nav-link">Mountain Master Suites</a></li>
-              <li><a href="#spaces" className="noire-nav-link">Grand Living & Dining Salon</a></li>
-            </ul>
-          </div>
-
-          {/* Navigation */}
-          <div className="space-y-3">
-            <span className="text-[10px] uppercase tracking-[0.2em] text-[#b9966a] block font-medium">
-              Navigation
-            </span>
-            <ul className="space-y-2 text-[#a39c8f]">
-              <li><a href="#story" className="noire-nav-link">Estate Philosophy</a></li>
-              <li><a href="#experiences" className="noire-nav-link">Experiences</a></li>
-              <li><a href="#journal" className="noire-nav-link">Stories & Notes</a></li>
-              <li><a href="#location" className="noire-nav-link">Location & Access</a></li>
-              <li><a href="#contact" className="noire-nav-link">Direct Inquiries</a></li>
-            </ul>
-          </div>
-
-          {/* Concierge */}
-          <div className="space-y-3">
-            <span className="text-[10px] uppercase tracking-[0.2em] text-[#b9966a] block font-medium">
-              Concierge
-            </span>
-            <div className="space-y-2 text-[#f7f3ec]">
-              <a href={`tel:${estateData.brand.phone}`} className="flex items-center gap-2 hover:text-[#b9966a] transition-colors">
-                <Phone className="w-3.5 h-3.5 text-[#b9966a]" />
-                <span>+91 74003 38525</span>
+          <div>
+            <h3 className="font-serif text-[24px] leading-tight">Speak to the concierge</h3>
+            <p className="t-body !text-[15px] mt-4 text-[var(--muted)] max-w-[480px]">
+              Share your dates and party size, and we will reply with availability and buyout details for the whole
+              estate.
+            </p>
+            <div className="mt-7 flex flex-col sm:flex-row gap-2">
+              <a
+                href={`tel:${brand.phone.replace(/\s/g, '')}`}
+                className="flex-1 h-[52px] flex items-center px-5 border border-[var(--line-2)] text-[15px] text-[var(--muted)] hover:text-[var(--ivory)] transition-colors"
+              >
+                Call {brand.phone}
               </a>
-              <a href={`mailto:${estateData.brand.email}`} className="flex items-center gap-2 hover:text-[#b9966a] transition-colors">
-                <Mail className="w-3.5 h-3.5 text-[#b9966a]" />
-                <span>{estateData.brand.email}</span>
+              <a href={whatsapp} target="_blank" rel="noopener noreferrer" className="btn btn-ivory roll-host h-[52px]">
+                <span className="t-label">
+                  <Roll>WhatsApp</Roll>
+                </span>
               </a>
-              <p className="text-[11px] text-[#a39c8f] pt-2">
-                Tungarli Hill Road, Lonavala, MH 410401
-              </p>
             </div>
           </div>
         </div>
 
-        {/* Giant Watermark CASA BRIO (Exact NOIRÉ Base Watermark) */}
-        <div className="pt-12 pb-6 text-center select-none opacity-15 hover:opacity-25 transition-opacity">
-          <span className="font-serif text-6xl sm:text-9xl md:text-[13vw] tracking-[0.2em] font-light text-[#f7f3ec] leading-none block">
-            CASA BRIO
-          </span>
+        <div className="border-t border-[var(--line)] mt-16 pt-12 grid grid-cols-2 lg:grid-cols-4 gap-10">
+          {columns.map((c) => (
+            <div key={c.title}>
+              <h4 className="t-label-sm text-[var(--stone)]">{c.title}</h4>
+              <ul className="mt-5 flex flex-col gap-3">
+                {c.links.map(([label, href]) => (
+                  <li key={label}>
+                    <a
+                      href={href}
+                      className="foot-link t-body !text-[16px] break-words"
+                      {...(href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                    >
+                      {label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
 
-        {/* Bottom Sub-bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between text-xs text-[#a39c8f] pt-6 border-t border-[#f2ede4]/10 gap-4">
-          <div>
-            © {new Date().getFullYear()} Casa Brio Private Luxury Estate. All rights reserved.
+        <p className="t-body !text-[15px] text-[var(--muted)] mt-14">
+          Single-group buyout only · Dedicated butler & chef care · Zero noise curfews
+        </p>
+      </div>
+
+      <div className="border-t border-[var(--line)] mt-12">
+        <div className="shell py-8 flex flex-col sm:flex-row gap-5 sm:items-center justify-between t-body !text-[15px] text-[var(--muted)]">
+          <span>© 2026 Casa Brio — Private Luxury Estate, Lonavala</span>
+          <div className="flex items-center gap-8">
+            <a href="#top" className="t-label text-[var(--ivory)] roll-host flex items-center gap-2">
+              <Roll>Back to top</Roll>
+              <span aria-hidden="true">↑</span>
+            </a>
           </div>
-          <button
-            onClick={scrollToTop}
-            className="flex items-center gap-1.5 text-[#b9966a] hover:text-[#dfc59e] transition-colors uppercase tracking-[0.18em] text-[10px] cursor-pointer"
-            data-nc="link"
-          >
-            <span>Back to Top</span>
-            <ArrowUp className="w-3.5 h-3.5" />
-          </button>
         </div>
       </div>
     </footer>

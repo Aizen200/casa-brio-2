@@ -156,30 +156,7 @@ export default function NoireiEngine() {
       doc.addEventListener('mouseleave', () => cursorEl && cursorEl.classList.remove('is-on'));
     }
 
-    // 2. Rolling CTA Labels (Noirei Part 6)
-    const initRolls = () => {
-      const pElements = doc.querySelectorAll('[data-noire-roll-label]');
-      pElements.forEach((p) => {
-        const text = p.getAttribute('data-noire-roll-label') || p.textContent.trim();
-        if (!text || p.querySelector('.noire-roll')) return;
-        const roll = doc.createElement('span');
-        roll.className = 'noire-roll';
-        roll.setAttribute('aria-hidden', 'true');
-        roll.style.setProperty('--lh', '1.2em');
-        Array.from(text).forEach((ch, i) => {
-          const s = doc.createElement('span');
-          s.textContent = ch === ' ' ? '\u00A0' : ch;
-          s.style.transitionDelay = `${i * 28}ms`;
-          roll.appendChild(s);
-        });
-        p.appendChild(roll);
-        p.setAttribute('data-noire-roll', text);
-      });
-    };
-    initRolls();
-    setTimeout(initRolls, 300);
-
-    // 3. Navbar scroll hide / reveal
+    // 2. Navbar scroll hide / reveal
     let lastY = window.scrollY;
     let acc = 0;
     let hidden = false;
@@ -211,10 +188,41 @@ export default function NoireiEngine() {
     };
     window.addEventListener('scroll', onScrollNav, { passive: true });
 
+    // 3. Scroll reveals: [data-reveal] gets .is-in once it enters the viewport.
+    // Fully clipped elements never report as intersecting, so clip reveals and
+    // text masked by an overflow-hidden parent are watched through that parent.
+    const watched = new Map();
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          (watched.get(entry.target) || []).forEach((el) => el.classList.add('is-in'));
+          watched.delete(entry.target);
+          io.unobserve(entry.target);
+        });
+      },
+      { rootMargin: '0px 0px -12% 0px', threshold: 0.01 }
+    );
+    const observeReveals = () =>
+      doc.querySelectorAll('[data-reveal]:not(.is-in)').forEach((el) => {
+        const parent = el.parentElement;
+        const masked = el.dataset.reveal === 'clip' || (parent && getComputedStyle(parent).overflow !== 'visible');
+        const target = masked && parent ? parent : el;
+        const list = watched.get(target) || [];
+        if (list.includes(el)) return;
+        list.push(el);
+        watched.set(target, list);
+        io.observe(target);
+      });
+    observeReveals();
+    const revealTimer = setTimeout(observeReveals, 600);
+
     return () => {
       if (cursorEl && cursorEl.parentNode) cursorEl.parentNode.removeChild(cursorEl);
       window.removeEventListener('mousemove', onPointerMove);
       window.removeEventListener('scroll', onScrollNav);
+      io.disconnect();
+      clearTimeout(revealTimer);
     };
   }, []);
 

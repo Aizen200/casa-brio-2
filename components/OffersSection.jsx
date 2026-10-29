@@ -1,81 +1,112 @@
 'use client';
 
-import { ArrowRight } from 'lucide-react';
+import { Em, Eyebrow, TextLink } from '@/components/ui';
+
+const offers = [
+  {
+    tag: 'Founders & leadership teams',
+    title: 'Founders Offsite',
+    desc: 'Reserve the estate for a strategy offsite. High-speed fibre broadband, the double-height salon with its 4K screen, dedicated chef catering, and absolute seclusion from city noise.',
+    details: 'High-speed WiFi · 4K salon · Chef dining',
+    image: '/images/bungalow/living-lounge-party.jpg',
+  },
+  {
+    tag: 'Birthdays & milestones',
+    title: 'Milestone Celebration',
+    desc: 'Celebrate without boundaries or curfews: the REVEL snooker lounge, a poolside barbecue grill, floodlit night cricket and zero noise restrictions.',
+    details: 'Zero noise curfew · Pool BBQ · Tournament snooker',
+    image: '/images/bungalow/party-lounge-detail.jpg',
+  },
+  {
+    tag: 'Families & friends',
+    title: 'Sanctuary Weekend',
+    desc: 'Gather multiple generations under one roof: four mountain suites, the sapphire pool, the garden lawn and round-the-clock butler service.',
+    details: '4 master suites · Sapphire pool · Butler concierge',
+    image: '/images/bungalow/pool-party-celebration.png',
+  },
+];
 
 export default function OffersSection({ onOpenBooking }) {
-  const offers = [
-    {
-      tag: "STAY LONGER",
-      title: "Founders Strategy Offsite",
-      desc: "Reserve the estate for leadership teams up to 20. Seamless high-speed fibre broadband, 4K salon presentation screen, dedicated chef catering, and absolute seclusion from city noise.",
-      details: "High-Speed WiFi · Double-Height Salon · Chef Dining"
-    },
-    {
-      tag: "BUYOUT INVITATION",
-      title: "Milestone Celebration & Speakeasy",
-      desc: "Celebrate without boundaries or curfews. Access the subterranean REVEL snooker lounge, poolside BBQ grill, floodlit night box cricket, and zero noise restrictions.",
-      details: "Zero Noise Curfew · Pool BBQ · Tournament Snooker"
-    },
-    {
-      tag: "WEEKEND RETREAT",
-      title: "Sanctuary Family Weekend",
-      desc: "Gather multiple generations under one roof. 4 mountain master suites, crystal sapphire pool with wooden pergola deck, landscaped garden lawn, and round-the-clock butler service.",
-      details: "4 Master Suites · Sapphire Pool · Butler Concierge"
-    }
-  ];
+  const [feature, ...rest] = offers;
 
   return (
-    <section className="py-28 sm:py-36 px-6 lg:px-14 bg-[#0d0c0a] border-b border-[#f2ede4]/10 relative select-none">
-      <div className="max-w-7xl mx-auto space-y-16 sm:space-y-20">
-        {/* Eyebrow: 05 · Offers */}
-        <div className="max-w-3xl space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="w-8 h-[1px] bg-[#b9966a]" />
-            <span className="text-[11px] uppercase tracking-[0.25em] text-[#a39c8f] font-sans font-medium">
-              05 · Offers
-            </span>
+    <section id="buyouts" className="sec on-light py-24 lg:py-40">
+      <div className="shell">
+        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8">
+          <div>
+            <Eyebrow>05 · Buyouts</Eyebrow>
+            <h2 className="t-h2 mt-7" data-reveal="">
+              Reasons to take <Em>the whole estate.</Em>
+            </h2>
           </div>
-          <h2 className="font-serif text-3xl sm:text-5xl md:text-6xl font-normal text-[#f7f3ec] leading-[1.08] tracking-[-0.01em]">
-            Reasons to stay a <span className="italic font-light text-[#b9966a]">little longer.</span>
-          </h2>
-          <p className="text-sm sm:text-base text-[#a39c8f] font-sans font-light leading-relaxed">
-            Whether an executive retreat, family milestone, or unhurried Sahyadri getaway.
+          <p className="t-body text-[var(--muted-ink)] max-w-[400px]" data-reveal="">
+            Whether an intimate celebration, a founders retreat, or a slow weekend beneath the Sahyadris, Casa Brio is
+            hosted for one private group at a time.
           </p>
         </div>
 
-        {/* 3 Editorial Cards (Exact NOIRÉ Card Proportion) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          {offers.map((offer, idx) => (
-            <div
-              key={idx}
-              className="p-8 sm:p-10 bg-[#16140f] border border-[#f2ede4]/12 hover:border-[#b9966a]/50 transition-all duration-500 flex flex-col justify-between space-y-8 group"
-            >
-              <div className="space-y-4">
-                <span className="text-[10px] uppercase tracking-[0.22em] text-[#b9966a] font-sans block font-medium">
-                  {offer.tag}
-                </span>
-                <h3 className="font-serif text-2xl sm:text-3xl text-[#f7f3ec] font-normal leading-tight group-hover:text-[#b9966a] transition-colors">
-                  {offer.title}
-                </h3>
-                <p className="text-xs sm:text-sm text-[#cfc8bd] font-sans font-light leading-relaxed">
-                  {offer.desc}
-                </p>
-              </div>
-
-              <div className="pt-6 border-t border-[#f2ede4]/10 space-y-4">
-                <span className="text-[11px] font-mono text-[#a39c8f] block">
-                  {offer.details}
-                </span>
-                <button
-                  onClick={onOpenBooking}
-                  className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-[#f7f3ec] group-hover:text-[#b9966a] transition-colors font-sans font-medium cursor-pointer"
-                  data-nc="button"
-                >
-                  <span>Inquire Buyout</span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
-                </button>
-              </div>
+        {/* feature offer */}
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-8 items-center mt-16 lg:mt-24">
+          <button
+            type="button"
+            onClick={onOpenBooking}
+            className="lg:col-span-7 media-frame media-zoom aspect-[780/600] block w-full"
+            data-reveal="clip"
+            data-nc="media"
+            data-nc-label="Enquire"
+          >
+            <img className="img-cover clip-img" src={feature.image} alt={feature.title} loading="lazy" />
+          </button>
+          <div className="lg:col-start-9 lg:col-span-4">
+            <div className="eyebrow" data-reveal="">
+              <span className="eyebrow-rule" />
+              <span className="t-label-sm">{feature.tag}</span>
             </div>
+            <h3 className="t-display mt-7" data-reveal="" style={{ '--rd': '.06s' }}>
+              {feature.title}
+            </h3>
+            <p className="t-lead mt-7 text-[var(--muted-ink)]" data-reveal="" style={{ '--rd': '.12s' }}>
+              {feature.desc}
+            </p>
+            <p className="t-label-sm mt-8 text-[var(--muted-ink)]" data-reveal="">
+              {feature.details}
+            </p>
+            <div className="mt-10" data-reveal="">
+              <TextLink onClick={onOpenBooking}>Request this buyout</TextLink>
+            </div>
+          </div>
+        </div>
+
+        {/* two smaller offers */}
+        <div className="grid md:grid-cols-2 gap-14 md:gap-8 mt-20 lg:mt-28">
+          {rest.map((o, i) => (
+            <article key={o.title}>
+              <button
+                type="button"
+                onClick={onOpenBooking}
+                className="media-frame media-zoom aspect-[624/420] block w-full"
+                data-reveal="clip"
+                style={{ '--rd': `${i * 0.12}s` }}
+                data-nc="media"
+                data-nc-label="Enquire"
+              >
+                <img className="img-cover clip-img" src={o.image} alt={o.title} loading="lazy" />
+              </button>
+              <div className="pt-8 max-w-[520px]">
+                <span className="t-label-sm text-[var(--muted-ink)]" data-reveal="">
+                  {o.tag}
+                </span>
+                <h3 className="t-h3 mt-5" data-reveal="" style={{ '--rd': '.06s' }}>
+                  {o.title}
+                </h3>
+                <p className="t-body mt-5 text-[var(--muted-ink)]" data-reveal="" style={{ '--rd': '.1s' }}>
+                  {o.desc}
+                </p>
+                <div className="mt-8" data-reveal="">
+                  <TextLink onClick={onOpenBooking}>Request this buyout</TextLink>
+                </div>
+              </div>
+            </article>
           ))}
         </div>
       </div>

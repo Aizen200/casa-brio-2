@@ -27,15 +27,11 @@ export default function GalleryLightbox({ isOpen, initialPhoto, initialCategory,
 
   // Set initial photo if supplied
   useEffect(() => {
-    if (initialCategory) {
-      setActiveCategory(initialCategory);
-    }
-    if (initialPhoto) {
-      const idx = estateData.allPhotos.findIndex((p) => p.src === initialPhoto);
-      if (idx !== -1) {
-        setCurrentIndex(idx);
-      }
-    }
+    if (!isOpen) return;
+    // The photo index is looked up in the unfiltered list, so a photo always opens under "All"
+    setActiveCategory(initialPhoto ? 'All' : initialCategory || 'All');
+    const idx = initialPhoto ? estateData.allPhotos.findIndex((p) => p.src === initialPhoto) : -1;
+    setCurrentIndex(idx !== -1 ? idx : 0);
   }, [initialPhoto, initialCategory, isOpen]);
 
   const handleNext = useCallback(() => {
